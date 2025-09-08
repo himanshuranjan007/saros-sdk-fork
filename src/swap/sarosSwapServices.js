@@ -290,7 +290,7 @@ export const withdrawAllTokenTypes = async (
     connection,
     poolAccountInfo.lpTokenMint
   );
-  const lpTokenSupply = poolLpMintInfo.supply.toNumber();
+  const lpTokenSupply = poolLpMintInfo.supply ? poolLpMintInfo.supply.toNumber() : 0;
 
   let feeAmount = 0;
   if (OWNER_WITHDRAW_FEE_NUMERATOR.toNumber() !== 0) {
@@ -400,7 +400,7 @@ export const depositAllTokenTypes = async (
     connection,
     poolAccountInfo.lpTokenMint
   );
-  const lpTokenSupply = poolLpMintInfo.supply.toNumber();
+  const lpTokenSupply = poolLpMintInfo.supply ? poolLpMintInfo.supply.toNumber() : 0;
 
   const poolToken0AccountInfo = await getTokenAccountInfo(
     connection,
@@ -423,7 +423,7 @@ export const depositAllTokenTypes = async (
     (poolToken1AccountInfo.amount.toNumber() * lpTokenAmount) / lpTokenSupply
   );
   const token1Amount = Math.floor(
-    newAmount1 + renderAmountSlippage(newAmount0, slippage)
+    newAmount1 + renderAmountSlippage(newAmount1, slippage)
   );
 
   const [poolAuthorityAddress] = await findPoolAuthorityAddress(

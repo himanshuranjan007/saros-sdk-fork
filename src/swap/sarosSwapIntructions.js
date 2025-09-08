@@ -100,7 +100,7 @@ export class SarosSwapInstructionService {
     ])
     const curveParamsBuffer = Buffer.alloc(32)
     curveParameters.toArrayLike(Buffer).copy(curveParamsBuffer)
-    const data = serialize(
+    const data = BorshService.serialize(
       commandDataLayout,
       {
         instruction: 0, // InitializeSwap instruction
@@ -148,7 +148,7 @@ export class SarosSwapInstructionService {
       borsh.u64('maximumTokenB')
     ])
 
-    const data = serialize(
+    const data = BorshService.serialize(
       dataLayout,
       {
         instruction: 2, // Deposit instruction
@@ -202,7 +202,7 @@ export class SarosSwapInstructionService {
       borsh.u64('minimumTokenB')
     ])
 
-    const data = serialize(
+    const data = BorshService.serialize(
       dataLayout,
       {
         instruction: 3, // Withdraw instruction
@@ -254,7 +254,7 @@ export class SarosSwapInstructionService {
       borsh.u64('amountIn'),
       borsh.u64('minimumAmountOut')
     ])
-    const data = serialize(
+    const data = BorshService.serialize(
       dataLayout,
       {
         instruction: 1, // Swap instruction
@@ -287,8 +287,3 @@ export class SarosSwapInstructionService {
   }
 }
 
-function serialize (layout, data, maxSpan) {
-  const buffer = Buffer.alloc(maxSpan)
-  const span = layout.encode(data, buffer)
-  return buffer.slice(0, span)
-}

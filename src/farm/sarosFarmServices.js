@@ -540,7 +540,7 @@ export class SarosFarmService {
     const priceLp = totalPriceToken / totalSupplyLP;
     const liquidityUsd = priceLp * totalStaked;
 
-    const apr = (totalRewardOneYearUSD / liquidityUsd) * 100;
+    const apr = liquidityUsd > 0 ? (totalRewardOneYearUSD / liquidityUsd) * 100 : 0;
     return {
       ...farmParam,
       liquidityUsd,
